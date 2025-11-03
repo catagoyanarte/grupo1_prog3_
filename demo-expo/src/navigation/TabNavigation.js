@@ -1,9 +1,19 @@
 // HOME MENU EN MI PROYECTO
 import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { FontAwesome } from '@expo/vector-icons';
-import {MaterialCommunityIcons } from '@expo/vector-icons';
 
+// importaciones de screens
+import HomeStack from './HomeStack';
+import CreatePost from '../screens/CreatePost';
+import Profile from '../screens/Profile';
+
+// para el tab
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+// iconos
+import Entypo from '@expo/vector-icons/Entypo';
+import Ionicons from '@expo/vector-icons/Ionicons';
+
+// uso la importacion para el tab
 const Tab = createBottomTabNavigator();
 
 function TabNavigation() {
@@ -11,18 +21,18 @@ function TabNavigation() {
         <Tab.Navigator screenOptions={{tabBarShowLabel: false}}>
             <Tab.Screen 
             name='Home' 
-            component={Home}
+            component={HomeStack}
              options={ 
                 { headerShown: false ,  
-                tabBarIcon: () => <FontAwesome name="home" size={24} color="black" />}
+                tabBarIcon: () => <Entypo name="home" size={24} color="black" /> }
             }
             />
             <Tab.Screen 
-            name='Comentarios' 
-            component={Comentarios}
+            name='CreatePost' 
+            component={CreatePost}
             options={ 
                 { headerShown: false , 
-                tabBarIcon: () => <MaterialCommunityIcons name="face-woman-profile" size={24} color="black" /> }
+                tabBarIcon: () => <Ionicons name="add-circle" size={24} color="black" /> }
             }
             />
             <Tab.Screen 
@@ -30,7 +40,7 @@ function TabNavigation() {
             component={Profile}
              options={ 
                 { headerShown: false ,  
-                tabBarIcon: () => <FontAwesome name="home" size={24} color="black" />}
+                tabBarIcon: () => <Ionicons name="person-sharp" size={24} color="black" /> }
             }/>
         </Tab.Navigator>
     )

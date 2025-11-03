@@ -1,15 +1,15 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Comentarios from '../components/Comentarios'
-import StackPrimario from './StackPrimario';
+import Home from '../screens/Home';
 
 const Stack= createNativeStackNavigator();
 
-export default function StackSecundario(){
+export default function HomeStack(){
     return (
           <Stack.Navigator> 
              <Stack.Screen 
-             name="StackNavigation" 
-             component={ StackPrimario } 
+             name="Home" 
+             component={ Home } 
              options={{
                 headerShown:false
              }}/>
