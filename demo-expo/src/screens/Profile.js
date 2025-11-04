@@ -10,4 +10,4 @@ export class Profile extends Component {
   }
 }
 
-export default Home
+export default Profile
