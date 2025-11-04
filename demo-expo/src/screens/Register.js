@@ -78,7 +78,45 @@ export default class Register extends Component {
           onChangeText={(text) => this.setState({ password: text })}
           value={this.state.password}
         />
+        <Text>{this.state.error}</Text>
+        <Pressable style={styles.boton} onPress={() => this.submit(this.state.username, this.state.email, this.state.password)}>
+          <Text>Registrarme</Text>
+        </Pressable>
+
+        <Pressable style={styles.boton} onPress={()=>this.props.navigation.navigate("Login")}>
+          <Text>Ya tenes cuenta? Iniciar sesion</Text>
+        </Pressable>
       </View>
     )
   }
+
+  
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'rgba(182, 163, 163, 0.5)',
+        alignItems: 'center',
+        fontSize: 16,
+
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: 'bold'
+
+    },
+    boton: {
+        backgroundColor: 'rgba(241, 9, 9, 0.26)',
+        borderRadius: 30,
+        padding: 10,
+        marginTop: 10
+    },
+    field: {
+        backgroundColor: 'rgba(54, 42, 42, 0.26)',
+        margin: 10,
+        borderRadius: 10,
+        padding: 8
+
+    }
+})
