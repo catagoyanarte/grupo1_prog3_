@@ -13,6 +13,19 @@ export default class Register extends Component {
     }
   }
 
+  componentDidMount(){
+    auth.onAuthStateChanged(user => {
+      console.log(user)
+      if (user != null){
+        this.props.navigation.navigate(
+          'TabNavigation'
+        )
+      }
+    }
+
+    )
+  }
+
   submit(username, email, password) {
     console.log('Creando usuario con los valores', { username, email, password })
 
