@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import { db, auth } from '../firebase/config';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native';
 
 export class CreatePost extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       descripcion: '',
       loading: '',
       error: '',
-      likes: [], // donde se guardan los emails
+      likes: [], // agregar y obtener datos de una coleccion power
+                 // donde se guardan los emails - agregar datos 
     }}
 
-    crearPosteo(){
+    crearPosteo(mensaje){
+      if (mensaje !== '') {
+
       db.collection('posts').add({
         owner: auth.currentUser.email,
         descripcion: this.state.descripcion,
@@ -20,27 +23,26 @@ export class CreatePost extends Component {
       })
       .then( console.log('el posteo se ha enviado correctamente') )
       .catch( error => console.log(error) )
-    }
-// para obtener los datos de una coleccion
-//db.collection('posts').onSnapshot(
-//  docs => {
-//    let posts = [];
-//    docs.forEach( doc => {
-//      posts.push({
-//        id: doc.id,
-//        data: doc.data()
-//      })
-//      this.setState({
-//        posteos: posts,
-//        loading: false
-//      })
-//    })
-//  }
-//)
+
+    } 
+  }
 
   render() {
     return (
-      <Text>Create Post</Text>
+      <View>
+      <Text>¿En que estas pensando?</Text>
+      <View>
+        <TextInput
+        keyboardType='default'
+        placeholder='Escribi tu proximo posteo'
+        onChangeText={(text) => this.setState({ descripcion: text })}
+        value={this.state.descripcion}
+        />
+        <Pressable onPress={() => this.crearPosteo(this.state.descripcion)}>
+          <Text>Publicar Posteo</Text>
+        </Pressable>
+      </View>
+      </View>
     )
   }}
 

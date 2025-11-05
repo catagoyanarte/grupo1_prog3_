@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Comentarios from '../components/Comentarios'
+import Comentarios from '../screens/Comentarios'
 import Home from '../screens/Home';
 
 const Stack= createNativeStackNavigator();
