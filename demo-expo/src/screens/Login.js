@@ -13,6 +13,18 @@ export default class Register extends Component {
     }
   }
 
+  componentDidMount(){
+      auth.onAuthStateChanged(user => {
+        console.log(user)
+        if (user != null){
+          this.props.navigation.navigate(
+            'TabNavigation'
+          )
+        }
+      }
+  
+      )
+    }
 
   submit(email, password) {
     console.log('Creando usuario con los valores', { email, password })
@@ -41,7 +53,7 @@ export default class Register extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Login</Text>
+        <Text style={styles.title}> Ingrese a su cuenta </Text>
 
 
         <TextInput
@@ -68,7 +80,7 @@ export default class Register extends Component {
 
 
         <Pressable style={styles.boton} onPress={()=>this.props.navigation.navigate("Register")}>
-          <Text>No tenes una cuenta? Registrate</Text>
+          <Text> No tenes una cuenta? Registrate </Text>
         </Pressable>
       </View>
     )

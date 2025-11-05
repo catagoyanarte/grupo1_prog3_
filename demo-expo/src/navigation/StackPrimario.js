@@ -8,20 +8,25 @@ const Stack = createNativeStackNavigator();
 
 export default function StackPrimario() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName='Register'>
+      
       <Stack.Screen
         name="Login"
-        component={Login} />
+        component={Login} 
+        options={{headerShown: false}}
+        />
 
       <Stack.Screen
         name="Register"
-        component={Register} />
+        component={Register} 
+        options={{headerShown: false}}
+        />
 
       <Stack.Screen
         name="AppTabs"
-        component={TabNavigation} />
-
-
+        component={TabNavigation} 
+        options={{headerShown: false}}
+        />
 
     </Stack.Navigator>
   )

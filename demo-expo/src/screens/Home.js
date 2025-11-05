@@ -32,7 +32,6 @@ export class Home extends Component {
   render() {
     return (
       <View>
-        <Text>Home</Text>
         <View style={styles1.flatlist}>
         <FlatList
             data={this.state.posteosRecuperados}
