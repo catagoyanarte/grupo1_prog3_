@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { db, auth } from '../firebase/config';
 import { View, Text, Pressable, TextInput, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import firebase from 'firebase';
 
 export class Home extends Component {
   constructor(props) {
@@ -14,7 +15,9 @@ export class Home extends Component {
 
   componentDidMount() {
     // para obtener los datos de una coleccion
-    db.collection('posts').orderBy('createdAt', 'desc').onSnapshot(
+    db.collection('posts')
+    .orderBy('createdAt', 'desc')
+    .onSnapshot(
       docs => {
         let posts = [];
         docs.forEach(doc => {
