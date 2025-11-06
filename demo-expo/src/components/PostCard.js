@@ -29,11 +29,13 @@ const stylesPost = StyleSheet.create({
       paddingHorizontal: 16,
       marginVertical: 12,
     },
-    owner: { fontWeight: 'bold',
+    owner: { 
+        fontWeight: 'bold',
          color: 'black',
           marginBottom: 6,
            fontSize: 15 },
-    texto: { fontSize: 16,
+    texto: { 
+        fontSize: 16,
          color: 'black',
           marginBottom: 12 },
     button: {
@@ -43,6 +45,7 @@ const stylesPost = StyleSheet.create({
       alignItems: 'center',
       alignSelf: 'stretch', 
     },
-    buttonText: { color: 'white',
+    buttonText: { 
+        color: 'white',
          fontWeight: '700' },
   });

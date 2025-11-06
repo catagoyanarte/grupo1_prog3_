@@ -55,41 +55,58 @@ export class CreatePost extends Component {
   }
 }
 
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 16,
+    width: '92%',        
+    maxWidth: 740,       
+    alignSelf: 'center', 
+    backgroundColor: '#f5f5f5',
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    marginVertical: 12,
+  },
+  card: {
+    width: '92%',        
+      maxWidth: 740,       
+      alignSelf: 'center', 
+      backgroundColor: '#f5f5f5',
+      borderRadius: 12,
+      paddingVertical: 14,
+      paddingHorizontal: 16,
+      marginVertical: 12,
   },
   title: {
-    fontSize: 18,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginBottom: 10,
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: 12,
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 8,
-    padding: 10,
-    minHeight: 80,
-    marginBottom: 10,
+    padding: 12,
+    minHeight: 100,
+    textAlignVertical: 'top',
+    marginBottom: 12,
+    backgroundColor: '#fff',
   },
   button: {
-    backgroundColor: '#005183',
-    padding: 10,
+    backgroundColor: '#1E5AA7',
+    paddingVertical: 12,
     borderRadius: 8,
     alignItems: 'center',
-    marginTop: 10,
   },
   buttonText: {
-    color: 'white',
-    fontWeight: '600',
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 16,
   },
   error: {
-    color: 'red',
+    color: 'crimson',
     textAlign: 'center',
-    marginTop: 6,
+    marginTop: 8,
   },
 });
 

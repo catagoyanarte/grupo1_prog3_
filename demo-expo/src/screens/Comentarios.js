@@ -100,9 +100,14 @@ export default Comentarios
 
 const styles3 = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 10,
+    width: '92%',        
+    maxWidth: 740,       
+    alignSelf: 'center', 
+    backgroundColor: '#f5f5f5',
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    marginVertical: 12,
   },
   titulo: {
     fontSize: 18,
@@ -113,16 +118,16 @@ const styles3 = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#000',
     borderRadius: 5,
-    height: 35,
+    height: 70,
     paddingHorizontal: 8,
     marginBottom: 10,
   },
   boton: {
-    backgroundColor: '#005183',
-    padding: 8,
-    borderRadius: 5,
+    backgroundColor: '#1E5AA7',
+    paddingVertical: 10,
+    borderRadius: 10,
     alignItems: 'center',
-    marginBottom: 15,
+    alignSelf: 'stretch',
   },
   textoBoton: {
     color: '#fff',
@@ -132,6 +137,7 @@ const styles3 = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 6,
+    paddingTop: 20,
   },
   commentCard: {
     borderWidth: 1,
