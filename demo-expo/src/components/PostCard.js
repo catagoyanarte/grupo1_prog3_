@@ -1,10 +1,14 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
-function Post() {
-    // tiene que contener post, fecha, email, likes (contador) y comentarios
-    return (
-        <View>
-        </View>
-    )
+export default function PostCard() {
+  return (
+    // copio estructura del posteo que ya hice
+    // usuario, texto, comentar 
+    // en comentarios -> arriba el posteo por id, abajo sus respectivos comentarios
+  );
 }
+
+const styles2 = StyleSheet.create({
+// respeto los q ya hice en home
+});

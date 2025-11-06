@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { db, auth } from '../firebase/config';
-import { View, Text, Pressable, TextInput, StyleSheet, FlatList } from 'react-native';
+import { View, Text, Pressable, TextInput, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 
 // capturar por id y agregar a card
 export class Comentarios extends Component {
@@ -8,60 +8,86 @@ export class Comentarios extends Component {
     super(props);
     this.state = {
       comentarios: [],
-      nuevoComentario: ''
+      nuevoComentario: '',
+      loading: true,
+      error: '',
     }
   }
 
   componentDidMount() {
-    // para obtener los datos de una coleccion
-    db.collection('comentarios').onSnapshot(
-      docs => {
+    const postId = this.props.route.params.postId;
+  
+    db.collection('comentarios')
+      .where('postId', '==', postId)
+      // .orderBy('createdAt', 'desc') m salta un error
+      .onSnapshot(docs => {
         let coments = [];
         docs.forEach(doc => {
           coments.push({
             id: doc.id,
             data: doc.data()
-          })
-          this.setState({
-            comentarios: coments,
-            loading: false
-          })
-        })
-      }
-    )
+          });
+        });
+        this.setState({
+          comentarios: coments,
+          loading: false
+        });
+      });
   }
-
-  comentar(comentario) {
-    if (comentario !== '') {
-      db.collection('posts').add({
+  
+  comentar() {
+    const postId = this.props.route.params.postId;
+    const comentario = this.state.nuevoComentario.trim();
+    
+    db.collection('comentarios')
+      .add({
+        postId,                              
         owner: auth.currentUser.email,
-        createdAt: Date.now(),
-        mensaje: descripcion
+        texto: comentario,
+        createdAt: Date.now()
       })
-        .then((response) => this.props.navigation.navigate('Nuevo Post'))
-        .catch((error) => console.log(error))
-    }
+      .then(() => 
+        this.setState({ nuevoComentario: '' }))
+      .catch(() =>
+         this.setState({ 
+          error: 'No se pudo publicar el comentario' 
+        }));
   }
+  
 
   render() {
+
+
+    if (this.state.loading) {
+      return <ActivityIndicator size='large' color='blue' />
+    }
+
     return (
-      <View>
-        <Text>Agrega un comentario</Text>
+      <View style={styles3.container}>
+        <Text style={styles3.titulo}>Agrega un comentario</Text>
         <View>
-          <TextInput
+
+          <TextInput style={styles3.input}
             keyboardType='default'
-            placeholder='Comenta que te parece publicacion'
+            placeholder='Comenta que te parece esta publicacion'
             onChangeText={(text) => this.setState({ nuevoComentario: text })}
             value={this.state.nuevoComentario}
           />
-          <Pressable onPress={() => this.comentar(this.state.nuevoComentario)}>
-            <Text>Comentar post</Text>
+
+          <Pressable style={styles3.boton} onPress={() => this.comentar()}>
+            <Text style={styles3.textoBoton}>Comentar post</Text>
           </Pressable>
           <View>
-            <Text>Comentarios:</Text>
+
+            <Text style={styles3.subtitulo}>Comentarios:</Text>
+
             {this.state.comentarios.map((comentario) => (
-              <Text>{comentario}</Text>
+              <View key={comentario.id} style={styles3.commentCard}>
+                <Text style={styles3.owner}>{comentario.data.owner}</Text>
+                <Text style={styles3.texto}>{comentario.data.texto}</Text>
+              </View>
             ))}
+
           </View>
         </View>
       </View>
@@ -70,3 +96,59 @@ export class Comentarios extends Component {
 }
 
 export default Comentarios
+
+const styles3 = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 10,
+  },
+  titulo: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 5,
+    height: 35,
+    paddingHorizontal: 8,
+    marginBottom: 10,
+  },
+  boton: {
+    backgroundColor: 'blue',
+    padding: 8,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  textoBoton: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  subtitulo: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 6,
+  },
+  commentCard: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 8,
+    marginBottom: 8,
+  },
+  owner: {
+    fontWeight: 'bold',
+    marginBottom: 3,
+  },
+  texto: {
+    fontSize: 14,
+  },
+  error: {
+    color: 'crimson',
+    textAlign: 'center',
+    marginTop: 10,
+  },
+});
