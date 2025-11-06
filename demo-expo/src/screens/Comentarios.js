@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { db, auth } from '../firebase/config';
 import { View, Text, Pressable, TextInput, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import PostCard from '../components/PostCard';
 
 // capturar por id y agregar a card
 export class Comentarios extends Component {
@@ -117,7 +118,7 @@ const styles3 = StyleSheet.create({
     marginBottom: 10,
   },
   boton: {
-    backgroundColor: 'blue',
+    backgroundColor: '#005183',
     padding: 8,
     borderRadius: 5,
     alignItems: 'center',

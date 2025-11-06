@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { View, Text, Pressable, FlatList } from 'react-native'
 import { auth, db } from '../firebase/config'
+import PostCard from '../components/PostCard';
+
 export class Profile extends Component {
   constructor(props) {
     super(props)

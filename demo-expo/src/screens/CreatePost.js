@@ -9,83 +9,89 @@ export class CreatePost extends Component {
       descripcion: '',
       loading: '',
       error: ''
-    }}
+    }
+  }
 
-    crearPosteo(mensaje){
-      if (mensaje !== '') {
+  crearPosteo(mensaje) {
+    if (mensaje !== '') {
 
       db.collection('posts').add({
         owner: auth.currentUser.email,
         descripcion: this.state.descripcion,
         createdAt: Date.now(),
         likes: [], // agregar y obtener datos de una coleccion power
-                  // donde se guardan los emails - agregar datos 
+        // donde se guardan los emails - agregar datos 
       })
-      .then( console.log('el posteo se ha enviado correctamente') )
-      .catch( error => console.log(error) )
-      } 
-      else {
-        this.setState({ error: 'escribi algo antes de publicar!'})
-      }
-    } 
+        .then(() => {
+          console.log('el posteo se ha enviado correctamente');
+          this.setState({ descripcion: '' });
+          this.props.navigation.navigate('Home');
+        })
+        .catch(error => console.log(error))
+    }
+    else {
+      this.setState({ error: 'escribi algo antes de publicar!' })
+    }
+  }
 
   render() {
     return (
       <View style={styles.container}>
-      <Text style={styles.title}>¿En que estas pensando?</Text>
-      <View>
-        <TextInput style={styles.input}
-        keyboardType='default'
-        placeholder='Escribi tu proximo posteo'
-        onChangeText={(text) => this.setState({ descripcion: text })}
-        value={this.state.descripcion}
-        />
-        <Pressable style={styles.button}
-         onPress={() => this.crearPosteo(this.state.descripcion)}>
-          <Text style={styles.buttonText}>Publicar Posteo</Text>
-        </Pressable>
-      </View>
+        <Text style={styles.title}>¿En que estas pensando?</Text>
+        <View>
+          <TextInput style={styles.input}
+            keyboardType='default'
+            placeholder='Escribi tu proximo posteo'
+            onChangeText={(text) => this.setState({ descripcion: text })}
+            value={this.state.descripcion}
+          />
+          <Pressable style={styles.button}
+            onPress={() => this.crearPosteo(this.state.descripcion)}>
+            <Text style={styles.buttonText}>Publicar Posteo</Text>
+          </Pressable>
+        </View>
       </View>
     )
-  }}
+  }
+}
 
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      padding: 16,
-    },
-    title: {
-      fontSize: 18,
-      fontWeight: '600',
-      textAlign: 'center',
-      marginBottom: 10,
-    },
-    input: {
-      borderWidth: 1,
-      borderColor: '#ccc',
-      borderRadius: 8,
-      padding: 10,
-      minHeight: 80,
-      marginBottom: 10,
-    },
-    button: {
-      backgroundColor: 'blue',
-      padding: 10,
-      borderRadius: 8,
-      alignItems: 'center',
-      marginTop: 10,
-    },
-    buttonText: {
-      color: 'white',
-      fontWeight: '600',
-    },
-    error: {
-      color: 'red',
-      textAlign: 'center',
-      marginTop: 6,
-    },
-  });
-  
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 16,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 10,
+    minHeight: 80,
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: '#005183',
+    padding: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '600',
+  },
+  error: {
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 6,
+  },
+});
+
 
 export default CreatePost

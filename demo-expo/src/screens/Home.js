@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { db, auth } from '../firebase/config';
 import { View, Text, Pressable, TextInput, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
 import firebase from 'firebase';
+import PostCard from '../components/PostCard';
 
 export class Home extends Component {
   constructor(props) {
@@ -41,6 +42,9 @@ export class Home extends Component {
       return <ActivityIndicator size='large' color='blue' />
     }
 
+    if (this.state.posteosRecuperados.length === 0) {
+      return <Text style={styles1.noPosts}>No hay posteos todavía</Text>;
+    }
 
     return (
       <View style={styles1.container}>
@@ -49,14 +53,11 @@ export class Home extends Component {
             data={this.state.posteosRecuperados}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View style={styles1.postCard}>
-                <Text style={styles1.owner}>{item.data.owner}</Text>
-                <Text style={styles1.texto}> {item.data.descripcion} </Text>
-                <Pressable style={styles1.button}
-                  onPress={() => this.props.navigation.navigate('Comentarios', { postId: item.id })
-                  } >
-                  <Text style={styles1.buttonText}>Comentar</Text>
-                </Pressable>
+              <View>
+              <PostCard
+              item={item}
+              navigation={this.props.navigation}
+              /> 
               </View>
             )}
           />
@@ -75,7 +76,6 @@ const styles1 = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingHorizontal: 10,
     padding: 20
   },
   postCard: {
@@ -104,17 +104,6 @@ const styles1 = StyleSheet.create({
     color: 'crimson',
     marginTop: 20
   },
-  button: {
-    backgroundColor: 'blue',
-    padding: 3,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '600', 
-  }
 
 })
 
