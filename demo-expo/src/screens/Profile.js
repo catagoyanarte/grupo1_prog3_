@@ -11,7 +11,7 @@ export class Profile extends Component {
       loadingPosteos: true
     }
   }
-  
+
 
   componentDidMount() {
     console.log(auth.currentUser)
@@ -31,42 +31,53 @@ export class Profile extends Component {
             data: doc.data()
           })
         })
-        posts.sort((a,b)=>b.data.createdAt-a.data.createdAt) //ordeno de mas nuevo a mas viejo
+        posts.sort((a, b) => b.data.createdAt - a.data.createdAt) //ordeno de mas nuevo a mas viejo
         console.log(posts)
-         this.setState({
-            posteos: posts,
-            loadingPosteos: false
-          })
+        this.setState({
+          posteos: posts,
+          loadingPosteos: false
+        })
       })
-    }
+  }
+
+
+  logout() {
+    auth.signOut()
+      .then(() => this.props.navigation.navigate("Login"))
+  }
+
 
 
   render() {
-      return(
+    return (
       <View>
-    {
-      this.state.loadingUsuario && this.state.loadingPosteos ? <Text>Cargando</Text> :
-        <View>
-          <Text>Profile</Text>
-          <Text>email: {this.state.usuario.owner}</Text>
-          <Text>usuario: {this.state.usuario.username}</Text>
-          
-          <FlatList
-          data={this.state.posteos}
-          keyExtractor={(item)=> item.id.toString()}
-          renderItem={(item)=>{
-            console.log(item)
-            return(
-<View>
-            <Text>{item.item.data.owner}</Text>
-            <Text>{item.item.data.texto}</Text>
-            <Text>----------------</Text>
-          </View>
-            )
-          } }
-          />
-        </View>
-    }
+        {
+          this.state.loadingUsuario && this.state.loadingPosteos ? <Text>Cargando</Text> :
+            <View>
+              <Text>Profile</Text>
+              <Text>email: {this.state.usuario.owner}</Text>
+              <Text>usuario: {this.state.usuario.username}</Text>
+              <Pressable onPress={() => this.logout()}>
+                <Text>Logout</Text>
+              </Pressable>
+
+
+              <FlatList
+                data={this.state.posteos}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={(item) => {
+                  console.log(item)
+                  return (
+                    <View>
+                      <Text>{item.item.data.owner}</Text>
+                      <Text>{item.item.data.texto}</Text>
+                      <Text>----------------</Text>
+                    </View>
+                  )
+                }}
+              />
+            </View>
+        }
       </View >
     )
   }
