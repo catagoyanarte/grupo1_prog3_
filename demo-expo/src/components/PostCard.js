@@ -1,51 +1,130 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { View, Text, StyleSheet, Pressable } from 'react-native'
+import firebase from 'firebase'
+import { db, auth } from "../firebase/config"
 
-export default function PostCard({ item, navigation }) {
+export default class PostCard extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      likeado: false,
+      cantLikes: 0
+    }
+  }
 
-    return (
-        <View style={stylesPost.postCard}>
-            <Text style={stylesPost.owner}>{item.data.owner}</Text>
-            <Text style={stylesPost.texto}> {item.data.descripcion} </Text>
-            <Pressable style={stylesPost.button}
-                  onPress={() => navigation.navigate('Comentarios', { postId: item.id })
-                  } >
-                  <Text style={stylesPost.buttonText}>Comentar</Text>
-                </Pressable>
-        </View>
-    )
+  componentDidMount() {
+     const { item } = this.props;
+    
+     db.collection('posts')
+      .doc(item.id)
+      .onSnapshot(doc => {
+        const data = doc.data()
+        this.setState({
+          cantLikes: data.likes.length,
+          likeado: data.likes.includes(auth.currentUser.email)
+        })
+      }
+      )
+  }
+
+  agregarLike() {
+     const { item } = this.props;
+    
+     db.collection('posts')
+      .doc(item.id)
+      .update({
+        likes: firebase.firestore.FieldValue.arrayUnion(
+          auth.currentUser.email
+        )
+      })
+      .then(() =>
+        this.setState({
+          likeado: true
+        })
+      )
+  }
+
+  sacarLike() {
+     const { item } = this.props;
+    
+     db.collection('posts')
+      .doc(item.id)
+      .update({
+        likes: firebase.firestore.FieldValue.arrayRemove(
+          auth.currentUser.email
+        )
+      })
+      .then(() =>
+        this.setState({
+          likeado: false
+        })
+      )
+  }
+
+  render() {
+    const { item, navigation } = this.props;
+
+  return (
+    <View style={stylesPost.postCard}>
+      <Text style={stylesPost.owner}>{item.data.owner}</Text>
+      <Text style={stylesPost.texto}> {item.data.descripcion} </Text>
+
+      {this.state.likeado ? (
+      <Pressable onPress={() => this.sacarLike()}>
+        <Text>❤️</Text>
+      </Pressable>
+    ) : (
+      <Pressable onPress={() => this.agregarLike()}>
+        <Text>❤️</Text>
+      </Pressable>
+    )}
+    <Text>{this.state.cantLikes} 
+      {this.state.cantLikes <= 1 ? 'Like' : 'Likes'}
+    </Text>
+
+      <Pressable style={stylesPost.button}
+        onPress={() => navigation.navigate('Comentarios', { postId: item.id })
+        } >
+        <Text style={stylesPost.buttonText}>Comentar</Text>
+      </Pressable>
+    </View>
+  )
+}
 }
 
 
 
 const stylesPost = StyleSheet.create({
-    postCard: {
-      width: '92%',        
-      maxWidth: 740,       
-      alignSelf: 'center', 
-      backgroundColor: '#f5f5f5',
-      borderRadius: 12,
-      paddingVertical: 14,
-      paddingHorizontal: 16,
-      marginVertical: 12,
-    },
-    owner: { 
-        fontWeight: 'bold',
-         color: 'black',
-          marginBottom: 6,
-           fontSize: 15 },
-    texto: { 
-        fontSize: 16,
-         color: 'black',
-          marginBottom: 12 },
-    button: {
-      backgroundColor: '#1E5AA7',
-      paddingVertical: 10,
-      borderRadius: 10,
-      alignItems: 'center',
-      alignSelf: 'stretch', 
-    },
-    buttonText: { 
-        color: 'white',
-         fontWeight: '700' },
-  });
+  postCard: {
+    width: '92%',
+    maxWidth: 740,
+    alignSelf: 'center',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    marginVertical: 12,
+  },
+  owner: {
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: 6,
+    fontSize: 15
+  },
+  texto: {
+    fontSize: 16,
+    color: 'black',
+    marginBottom: 12
+  },
+  button: {
+    backgroundColor: '#1E5AA7',
+    paddingVertical: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    alignSelf: 'stretch',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '700'
+  },
+});
