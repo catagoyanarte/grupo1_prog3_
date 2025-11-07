@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, Pressable, FlatList } from 'react-native'
+import { View, Text, Pressable, FlatList, StyleSheet  } from 'react-native'
 import { auth, db } from '../firebase/config'
 import PostCard from '../components/PostCard';
 
@@ -48,47 +48,69 @@ export class Profile extends Component {
       .then(() => this.props.navigation.navigate("Login"))
   }
 
-
-
   render() {
+    if (this.state.loadingUsuario || this.state.loadingPosteos) {
+      return (
+        <View style={styles.container}>
+          <Text>Cargando...</Text>
+        </View>
+      )
+    }
+
     return (
-      <View>
-        {
-          this.state.loadingUsuario && this.state.loadingPosteos ? <Text>Cargando</Text> :
-            <View>
-              <Text>Profile</Text>
-              <Text>email: {this.state.usuario.owner}</Text>
-              <Text>usuario: {this.state.usuario.username}</Text>
-              <Pressable onPress={() => this.logout()}>
-                <Text>Logout</Text>
-              </Pressable>
+      <View style={styles.container}>
+        <Text style={styles.title}>Mi perfil</Text>
+        <Text>Email: {this.state.usuario.owner}</Text>
+        <Text>Usuario: {this.state.usuario.username}</Text>
 
+        <Pressable onPress={() => this.logout()} style={styles.logoutBtn}>
+          <Text style={styles.logoutText}>Cerrar sesión</Text>
+        </Pressable>
 
-              <FlatList
-                data={this.state.posteos}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={(item) => {
-                  console.log(item)
-                  return (
-                    <View>
-                      <Text>{item.item.data.owner}</Text>
-                      <Text>{item.item.data.texto}</Text>
-                      <Text>----------------</Text>
-                    </View>
-                  )
-                }}
-              />
-            </View>
-        }
-      </View >
+        <Text style={styles.subtitle}>Mis posteos:</Text>
+
+        <FlatList
+          data={this.state.posteos}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <PostCard
+              item={item}
+              navigation={this.props.navigation}
+            />
+          )}
+        />
+      </View>
     )
   }
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 15,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 18,
+    marginVertical: 10,
+    fontWeight: '600',
+  },
+  logoutBtn: {
+    backgroundColor: '#E63946',
+    borderRadius: 8,
+    marginTop: 10,
+    padding: 10,
+    alignItems: 'center'
+  },
+  logoutText: {
+    color: 'white',
+    fontWeight: 'bold'
+  }
+})
 
 export default Profile
-
-
-
-
-
