@@ -13,10 +13,8 @@ export default class PostCard extends Component {
   }
 
   componentDidMount() {
-     const { item } = this.props;
-    
      db.collection('posts')
-      .doc(item.id)
+      .doc(this.props.item.id)
       .onSnapshot(doc => {
         const data = doc.data()
         this.setState({
@@ -28,10 +26,8 @@ export default class PostCard extends Component {
   }
 
   agregarLike() {
-     const { item } = this.props;
-    
      db.collection('posts')
-      .doc(item.id)
+      .doc(this.props.item.id)
       .update({
         likes: firebase.firestore.FieldValue.arrayUnion(
           auth.currentUser.email
@@ -45,10 +41,8 @@ export default class PostCard extends Component {
   }
 
   sacarLike() {
-     const { item } = this.props;
-    
      db.collection('posts')
-      .doc(item.id)
+      .doc(this.props.item.id)
       .update({
         likes: firebase.firestore.FieldValue.arrayRemove(
           auth.currentUser.email
@@ -62,12 +56,10 @@ export default class PostCard extends Component {
   }
 
   render() {
-    const { item, navigation } = this.props;
-
   return (
     <View style={stylesPost.postCard}>
-      <Text style={stylesPost.owner}>{item.data.owner}</Text>
-      <Text style={stylesPost.texto}> {item.data.descripcion} </Text>
+      <Text style={stylesPost.owner}>{this.props.item.data.owner}</Text>
+      <Text style={stylesPost.texto}> {this.props.item.data.descripcion} </Text>
 
       {this.state.likeado ? (
       <Pressable onPress={() => this.sacarLike()}>
@@ -83,7 +75,7 @@ export default class PostCard extends Component {
     </Text>
 
       <Pressable style={stylesPost.button}
-        onPress={() => navigation.navigate('Comentarios', { postId: item.id })
+        onPress={() => this.props.navigation.navigate('Comentarios', { postId: this.props.item.id })
         } >
         <Text style={stylesPost.buttonText}>Comentar</Text>
       </Pressable>
@@ -91,8 +83,6 @@ export default class PostCard extends Component {
   )
 }
 }
-
-
 
 const stylesPost = StyleSheet.create({
   postCard: {
