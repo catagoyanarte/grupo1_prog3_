@@ -60,7 +60,7 @@ export default class PostCard extends Component {
     <View style={stylesPost.postCard}>
       <Text style={stylesPost.owner}>{this.props.item.data.owner}</Text>
       <Text style={stylesPost.texto}> {this.props.item.data.descripcion} </Text>
-
+      <View style={stylesPost.likesContainer}>
       {this.state.likeado ? (
       <Pressable onPress={() => this.sacarLike()}>
         <Text>❤️</Text>
@@ -73,6 +73,7 @@ export default class PostCard extends Component {
     <Text>{this.state.cantLikes} 
       {this.state.cantLikes <= 1 ? 'Like' : 'Likes'}
     </Text>
+    </View>
 
       <Pressable style={stylesPost.button}
         onPress={() => this.props.navigation.navigate('Comentarios', { postId: this.props.item.id })
@@ -117,4 +118,7 @@ const stylesPost = StyleSheet.create({
     color: 'white',
     fontWeight: '700'
   },
+  likesContainer: {
+    marginBottom: 10,
+  }
 });

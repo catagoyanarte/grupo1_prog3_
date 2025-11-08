@@ -13,6 +13,12 @@ export class CreatePost extends Component {
   }
 
   crearPosteo(mensaje) {
+
+    if ( mensaje === '') {
+        this.setState({ error: 'El post no puede estar vacio! Escribi lo que estes pensando.'});
+        return;
+    }
+
     if (mensaje !== '') {
 
       db.collection('posts').add({
@@ -24,13 +30,10 @@ export class CreatePost extends Component {
       })
         .then(() => {
           console.log('el posteo se ha enviado correctamente');
-          this.setState({ descripcion: '' });
+          this.setState({ descripcion: '', error: '' });
           this.props.navigation.navigate('Home');
         })
         .catch(error => console.log(error))
-    }
-    else {
-      this.setState({ error: 'escribi algo antes de publicar!' })
     }
   }
 
@@ -49,6 +52,7 @@ export class CreatePost extends Component {
             onPress={() => this.crearPosteo(this.state.descripcion)}>
             <Text style={styles.buttonText}>Publicar Posteo</Text>
           </Pressable>
+          <Text style={styles.error}>{this.state.error}</Text>
         </View>
       </View>
     )
@@ -107,6 +111,7 @@ const styles = StyleSheet.create({
     color: 'crimson',
     textAlign: 'center',
     marginTop: 8,
+    fontWeight: 'bold',
   },
 });
 

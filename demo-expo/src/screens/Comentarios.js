@@ -40,6 +40,11 @@ export class Comentarios extends Component {
     const postId = this.props.route.params.postId;
     const comentario = this.state.nuevoComentario.trim();
     
+    if ( comentario === '') {
+      this.setState({ error: 'El comentario no puede estar vacio! Escribi lo que estes pensando.'});
+      return;
+    }
+
     db.collection('comentarios')
       .add({
         postId,                              
@@ -48,7 +53,7 @@ export class Comentarios extends Component {
         createdAt: Date.now()
       })
       .then(() => 
-        this.setState({ nuevoComentario: '' }))
+        this.setState({ nuevoComentario: '', error: '' }))
       .catch(() =>
          this.setState({ 
           error: 'No se pudo publicar el comentario' 
@@ -78,6 +83,7 @@ export class Comentarios extends Component {
           <Pressable style={styles3.boton} onPress={() => this.comentar()}>
             <Text style={styles3.textoBoton}>Comentar post</Text>
           </Pressable>
+          <Text style={styles3.error}>{this.state.error}</Text>
           <View>
 
             <Text style={styles3.subtitulo}>Comentarios:</Text>
@@ -157,5 +163,6 @@ const styles3 = StyleSheet.create({
     color: 'crimson',
     textAlign: 'center',
     marginTop: 10,
+    fontWeight: 'bold',
   },
 });
