@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 18,
     textAlign: 'center',
-    color: '#1E1E1E',
+    color: 'white',
   },
   input: {
     borderWidth: 1,
