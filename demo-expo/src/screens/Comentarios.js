@@ -9,6 +9,8 @@ export class Comentarios extends Component {
     super(props);
     this.state = {
       comentarios: [],
+      posteos: [],
+      seleccionado: null,
       nuevoComentario: '',
       loading: true,
       error: '',
@@ -17,6 +19,31 @@ export class Comentarios extends Component {
 
   componentDidMount() {
     const postId = this.props.route.params.postId;
+    let seleccionado = null;
+
+    // para obtener los datos de una coleccion, mismo que home
+    db.collection('posts')
+      .onSnapshot(
+        docs => {
+          let posts = [];
+          seleccionado = null;
+          
+          docs.forEach(doc => {
+            let item = { 
+              id: doc.id,
+              data: doc.data() }
+            posts.push({ item })
+          if (doc.id == postId) {
+            seleccionado = item;
+          }
+          })
+          this.setState({
+            posteos: posts,
+            seleccionado,
+            loading: false
+          })
+        }
+      )
   
     db.collection('comentarios')
       .where('postId', '==', postId)
@@ -53,7 +80,8 @@ export class Comentarios extends Component {
         createdAt: Date.now()
       })
       .then(() => 
-        this.setState({ nuevoComentario: '', error: '' }))
+        this.setState({ nuevoComentario: '',
+           error: '' }))
       .catch(() =>
          this.setState({ 
           error: 'No se pudo publicar el comentario' 
@@ -70,6 +98,12 @@ export class Comentarios extends Component {
 
     return (
       <View style={styles3.container}>
+        <View style={styles3.postContainer}>
+              <PostCard
+              item={this.state.seleccionado}
+              navigation={this.props.navigation}
+              /> 
+              </View>
         <Text style={styles3.titulo}>Agrega un comentario</Text>
         <View>
 
@@ -165,4 +199,7 @@ const styles3 = StyleSheet.create({
     marginTop: 10,
     fontWeight: 'bold',
   },
+  postContainer: {
+    
+  }
 });

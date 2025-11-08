@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native'
 import firebase from 'firebase'
 import { db, auth } from "../firebase/config"
 
+
 export default class PostCard extends Component {
   constructor(props) {
     super(props)
@@ -58,7 +59,7 @@ export default class PostCard extends Component {
   render() {
   return (
     <View style={stylesPost.postCard}>
-      <Text style={stylesPost.owner}>{this.props.item.data.owner}</Text>
+      <Text style={stylesPost.owner}>{this.props.item.data.owner} posteo hoy a las {new Date(this.props.item.data.createdAt).toLocaleTimeString()} </Text>
       <Text style={stylesPost.texto}> {this.props.item.data.descripcion} </Text>
       <View style={stylesPost.likesContainer}>
       {this.state.likeado ? (
