@@ -95,28 +95,59 @@ export default class Register extends Component {
 
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: 'rgba(182, 163, 163, 0.5)',
-        alignItems: 'center',
-        fontSize: 16,
-
-    },
-    title: {
-        fontSize: 30,
-        fontWeight: 'bold'
-
-    },
-    boton: {
-        backgroundColor: 'rgba(241, 9, 9, 0.26)',
-        borderRadius: 30,
-        padding: 10,
-        marginTop: 10
-    },
-    field: {
-        backgroundColor: 'rgba(54, 42, 42, 0.26)',
-        margin: 10,
-        borderRadius: 10,
-        padding: 8
-
-    }
+  container: {
+    width: '92%',
+    maxWidth: 740,
+    alignSelf: 'center',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 12,
+    paddingVertical: 24,
+    paddingHorizontal: 16,
+    marginVertical: 20,
+    alignItems: 'stretch',
+  },
+  
+  title: {
+    fontSize: 22,
+    fontWeight: '700',
+    marginBottom: 18,
+    textAlign: 'center',
+    color: '#1E1E1E',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 14,
+    backgroundColor: '#fff',
+    fontSize: 16,
+  },
+  boton: {
+    backgroundColor: '#1E5AA7',
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  secondaryButton: {
+    marginTop: 14,
+    alignItems: 'center',
+  },
+  secondaryButtonText: {
+    color: '#1E5AA7',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  error: {
+    color: 'crimson',
+    textAlign: 'center',
+    marginBottom: 10,
+    fontWeight: 'bold',
+  },
 })

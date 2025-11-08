@@ -87,30 +87,40 @@ export class Profile extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
-    backgroundColor: '#fff',
+    width: '92%',
+    maxWidth: 740,
+    alignSelf: 'center',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 12,
+    paddingVertical: 24,
+    paddingHorizontal: 16,
+    marginVertical: 20,
   },
   title: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 10,
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 8,
+    textAlign: 'center',
+    color: '#1E1E1E',
   },
   subtitle: {
     fontSize: 18,
-    marginVertical: 10,
     fontWeight: '600',
+    marginTop: 16,
+    marginBottom: 8,
+    color: '#333',
   },
   logoutBtn: {
-    backgroundColor: '#E63946',
+    backgroundColor: '#1E5AA7',
     borderRadius: 8,
-    marginTop: 10,
-    padding: 10,
-    alignItems: 'center'
+    marginTop: 20,
+    paddingVertical: 12,
+    alignItems: 'center',
   },
   logoutText: {
-    color: 'white',
-    fontWeight: 'bold'
-  }
-})
-
+    color: '#fff',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+});
 export default Profile

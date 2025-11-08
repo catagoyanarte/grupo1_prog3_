@@ -86,36 +86,49 @@ export default class Register extends Component {
     )
   }
 }
-
-
-
-
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: 'rgba(182, 163, 163, 0.5)',
-        alignItems: 'center',
-        fontSize: 16,
-
-
-    },
-    title: {
-        fontSize: 30,
-        fontWeight: 'bold'
-
-
-    },
-    boton: {
-        backgroundColor: 'rgba(241, 9, 9, 0.26)',
-        borderRadius: 30,
-        padding: 10,
-        marginTop: 10
-    },
-    field: {
-        backgroundColor: 'rgba(54, 42, 42, 0.26)',
-        margin: 10,
-        borderRadius: 10,
-        padding: 8
-
-
-    }
+  container: {
+    width: '92%',
+    maxWidth: 740,
+    alignSelf: 'center',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 12,
+    paddingVertical: 24,
+    paddingHorizontal: 16,
+    marginVertical: 20,
+    alignItems: 'stretch',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#1E1E1E',
+  },
+  boton: {
+    backgroundColor: '#1E5AA7',
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    alignItems: 'center',
+    marginTop: 12,
+  },
+  field: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    padding: 12,
+    marginVertical: 10,
+    fontSize: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    padding: 12,
+    marginVertical: 10,
+    fontSize: 16,
+  },
 })
