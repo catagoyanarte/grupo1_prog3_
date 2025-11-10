@@ -75,12 +75,16 @@ export default class PostCard extends Component {
       {this.state.cantLikes <= 1 ? 'Like' : 'Likes'}
     </Text>
     </View>
-
+    { this.props.pantalla == 'Comentarios' ? null : 
       <Pressable style={stylesPost.button}
-        onPress={() => this.props.navigation.navigate('Comentarios', { postId: this.props.item.id })
+        onPress={() =>
+          this.props.pantalla == "Profile" ?
+            this.props.navigation.navigate('Home',{screen: 'Comentarios', params: { postId: this.props.item.id }})
+          : 
+            this.props.navigation.navigate('Comentarios', { postId: this.props.item.id })
         } >
         <Text style={stylesPost.buttonText}>Comentar</Text>
-      </Pressable>
+      </Pressable> }
     </View>
   )
 }

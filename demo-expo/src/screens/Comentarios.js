@@ -18,6 +18,7 @@ export class Comentarios extends Component {
   }
 
   componentDidMount() {
+    console.log('this.props', this.props)
     const postId = this.props.route.params.postId;
     let seleccionado = null;
 
@@ -27,15 +28,16 @@ export class Comentarios extends Component {
         docs => {
           let posts = [];
           seleccionado = null;
-          
+
           docs.forEach(doc => {
-            let item = { 
+            let item = {
               id: doc.id,
-              data: doc.data() }
+              data: doc.data()
+            }
             posts.push({ item })
-          if (doc.id == postId) {
-            seleccionado = item;
-          }
+            if (doc.id == postId) {
+              seleccionado = item;
+            }
           })
           this.setState({
             posteos: posts,
@@ -44,10 +46,10 @@ export class Comentarios extends Component {
           })
         }
       )
-  
+
     db.collection('comentarios')
       .where('postId', '==', postId)
-      // .orderBy('createdAt', 'desc') m salta un error
+      // .orderBy('createdAt', 'desc') me salta un error
       .onSnapshot(docs => {
         let coments = [];
         docs.forEach(doc => {
@@ -62,32 +64,34 @@ export class Comentarios extends Component {
         });
       });
   }
-  
+
   comentar() {
     const postId = this.props.route.params.postId;
-    const comentario = this.state.nuevoComentario.trim();
-    
-    if ( comentario === '') {
-      this.setState({ error: 'El comentario no puede estar vacio! Escribi lo que estes pensando.'});
+    const comentario = this.state.nuevoComentario;
+
+    if (comentario === '') {
+      this.setState({ error: 'El comentario no puede estar vacio! Escribi lo que estes pensando.' });
       return;
     }
 
     db.collection('comentarios')
       .add({
-        postId,                              
+        postId,
         owner: auth.currentUser.email,
         texto: comentario,
         createdAt: Date.now()
       })
-      .then(() => 
-        this.setState({ nuevoComentario: '',
-           error: '' }))
+      .then(() =>
+        this.setState({
+          nuevoComentario: '',
+          error: ''
+        }))
       .catch(() =>
-         this.setState({ 
-          error: 'No se pudo publicar el comentario' 
+        this.setState({
+          error: 'No se pudo publicar el comentario'
         }));
   }
-  
+
 
   render() {
 
@@ -99,11 +103,12 @@ export class Comentarios extends Component {
     return (
       <View style={styles3.container}>
         <View style={styles3.postContainer}>
-              <PostCard
-              item={this.state.seleccionado}
-              navigation={this.props.navigation}
-              /> 
-              </View>
+          <PostCard
+            item={this.state.seleccionado}
+            navigation={this.props.navigation}
+            pantalla={this.props.route.name}
+          />
+        </View>
         <Text style={styles3.titulo}>Agrega un comentario</Text>
         <View>
 
@@ -122,12 +127,18 @@ export class Comentarios extends Component {
 
             <Text style={styles3.subtitulo}>Comentarios:</Text>
 
-            {this.state.comentarios.map((comentario) => (
-              <View key={comentario.id} style={styles3.commentCard}>
-                <Text style={styles3.owner}>{comentario.data.owner}</Text>
-                <Text style={styles3.texto}>{comentario.data.texto}</Text>
-              </View>
-            ))}
+            <View style={styles3.flatlist}>
+              <FlatList
+                data={this.state.comentarios}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                  <View key={item.id} style={styles3.commentCard}>
+                  <Text style={styles3.owner}>{item.data.owner}</Text>
+                  <Text style={styles3.texto}>{item.data.texto}</Text>
+                </View>
+                )}
+              />
+            </View>
 
           </View>
         </View>
@@ -140,9 +151,9 @@ export default Comentarios
 
 const styles3 = StyleSheet.create({
   container: {
-    width: '92%',        
-    maxWidth: 740,       
-    alignSelf: 'center', 
+    width: '92%',
+    maxWidth: 740,
+    alignSelf: 'center',
     backgroundColor: '#f5f5f5',
     borderRadius: 12,
     paddingVertical: 14,
@@ -200,6 +211,6 @@ const styles3 = StyleSheet.create({
     fontWeight: 'bold',
   },
   postContainer: {
-    
+
   }
 });

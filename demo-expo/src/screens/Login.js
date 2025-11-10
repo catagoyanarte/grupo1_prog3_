@@ -16,9 +16,9 @@ export default class Register extends Component {
   componentDidMount(){
       auth.onAuthStateChanged(user => {
         console.log(user)
-        if (user != null){
+        if (user !== null){
           this.props.navigation.navigate(
-            'TabNavigation'
+            'AppTabs'
           )
         }
       }
@@ -75,12 +75,12 @@ export default class Register extends Component {
         />
         <Text>{this.state.error}</Text>
         <Pressable style={styles.boton} onPress={() => this.submit( this.state.email, this.state.password)}>
-          <Text>Loguearme</Text>
+          <Text style={styles.texto1}>Loguearme</Text>
         </Pressable>
 
 
         <Pressable style={styles.boton} onPress={()=>this.props.navigation.navigate("Register")}>
-          <Text> No tenes una cuenta? Registrate </Text>
+          <Text style={styles.texto1}> No tenes una cuenta? Registrate </Text>
         </Pressable>
       </View>
     )
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#1E1E1E',
+    color: 'black',
   },
   boton: {
     backgroundColor: '#1E5AA7',
@@ -130,5 +130,8 @@ const styles = StyleSheet.create({
     padding: 12,
     marginVertical: 10,
     fontSize: 16,
+  },
+  texto1: {
+    color: 'white',
   },
 })

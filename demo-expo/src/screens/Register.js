@@ -80,11 +80,11 @@ export default class Register extends Component {
         />
         <Text>{this.state.error}</Text>
         <Pressable style={styles.boton} onPress={() => this.submit(this.state.username, this.state.email, this.state.password)}>
-          <Text> Enviar registro </Text>
+          <Text style={styles.texto1}> Enviar registro </Text>
         </Pressable>
 
         <Pressable style={styles.boton} onPress={()=>this.props.navigation.navigate("Login")}>
-          <Text>Ya tenes cuenta? Iniciar sesion</Text>
+          <Text style={styles.texto1}>Ya tenes cuenta? Iniciar sesion</Text>
         </Pressable>
       </View>
     )
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 18,
     textAlign: 'center',
-    color: 'white',
+    color: 'black',
   },
   input: {
     borderWidth: 1,
@@ -149,5 +149,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
     fontWeight: 'bold',
+  },
+  texto1: {
+    color: 'white',
   },
 })

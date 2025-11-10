@@ -60,8 +60,8 @@ export class Profile extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Mi perfil</Text>
-        <Text>Email: {this.state.usuario.owner}</Text>
-        <Text>Usuario: {this.state.usuario.username}</Text>
+        <Text style={styles.usuario}>Email: {this.state.usuario.owner}</Text>
+        <Text style={styles.usuario}>Usuario: {this.state.usuario.username}</Text>
 
         <Pressable onPress={() => this.logout()} style={styles.logoutBtn}>
           <Text style={styles.logoutText}>Cerrar sesión</Text>
@@ -76,6 +76,7 @@ export class Profile extends Component {
             <PostCard
               item={item}
               navigation={this.props.navigation}
+              pantalla = {this.props.route.name}
             />
           )}
         />
@@ -122,5 +123,10 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
   },
+  usuario: {
+    color: 'black',
+    fontWeight: '700',
+    fontSize: 16,
+  }
 });
 export default Profile
