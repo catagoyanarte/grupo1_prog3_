@@ -26,6 +26,7 @@ function TabNavigation() {
                 { headerShown: false ,  
                 tabBarIcon: () => <Entypo name="home" size={24} color="black" /> }
             }
+            onPress={() => console.log('usando home')}
             />
             <Tab.Screen 
             name='CreatePost' 
@@ -34,6 +35,8 @@ function TabNavigation() {
                 { headerShown: false , 
                 tabBarIcon: () => <Ionicons name="add-circle" size={24} color="black" /> }
             }
+            onPress={() => console.log('usando crearPost')}
+
             />
             <Tab.Screen 
             name='Profile' 
